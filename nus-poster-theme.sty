@@ -1,0 +1,339 @@
+%
+% NUS POSTER BEAMER THEME
+%
+
+% fork of the Gemini template https://github.com/anishathalye/gemini
+% this package assumes Lua(La)Tex throughout
+\ProvidesPackage{nus-poster-theme}[NUS Beamer poster theme.]
+
+\RequirePackage{fontspec}     % advanced font selection, unified interface for OTF, TTF, AAT
+\RequirePackage{unicode-math} % unicode mathematics support
+\RequirePackage{microtype}    % micro-typographic (character protrusion, font expansion, etc) enhacements
+
+\RequirePackage{xcolor} % driver-independent color extensions
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+
+\RequirePackage{stackengine} % highly customised stacking of objects
+
+\RequirePackage{tikz}
+\RequirePackage{calc} % simple arithmetics in LaTeX commands
+
+\RequirePackage{svg}
+\svgsetup{inkscapearea=page, inkscapelatex=true}
+
+\RequirePackage{exscale}
+\RequirePackage{ragged2e}
+\RequirePackage{changepage}
+
+\RequirePackage{bookmark} % alternative outline organization for hyperref
+\RequirePackage{xurl} % add URL line breaks if available
+
+\RequirePackage{amsmath} % AMS mathematical facilities
+
+%
+% FONTS
+%
+% see: https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/fontspec/fontspec.pdf
+\setsansfont[
+  FontFace = {lt}{n}{Lato Light},
+  FontFace = {lt}{it}{Lato Light Italic},
+]{Lato}
+\setromanfont[
+  FontFace = {lt}{n}{Raleway Light},
+  FontFace = {lt}{it}{Raleway Light Italic},
+]{Raleway}
+\setmonofont{Fira Mono}[Scale=MatchLowercase]
+\setmathfont{XITS Math}
+
+% see: https://tex.stackexchange.com/questions/176722/define-a-new-xxseries-macro-for-light-fonts
+\DeclareRobustCommand{\ltseries}{\fontseries{lt}\selectfont}
+\DeclareTextFontCommand{\textsi}{\sishape}
+
+\usefonttheme{professionalfonts} % disable beamer internal replacements
+
+\setbeamerfont{alerted text}{series=\bfseries}
+
+\setbeamerfont{headline}{family=\rmfamily}
+\setbeamerfont{headline title}{family=\rmfamily,size=\Huge,series=\bfseries}
+\setbeamerfont{headline author}{size=\Large}
+\setbeamerfont{headline institute}{size=\normalsize}
+\setbeamerfont{title}{family=\rmfamily,series=\bfseries,size=\Huge}
+\setbeamerfont{subtitle}{family=\rmfamily,series=\ltseries,size=\LARGE}
+\setbeamerfont{block title}{family=\rmfamily,size=\large,series=\bfseries}
+\setbeamerfont{heading}{family=\rmfamily,series=\ltseries}
+\setbeamerfont{caption}{size=\small}
+\setbeamerfont{footline}{family=\rmfamily,size=\normalsize}
+
+%
+% COLORS
+%
+\definecolor{nus@orange}{HTML}{EF7C00}
+\definecolor{nus@blue}{HTML}{003D7C}
+\definecolor{nus@black}{HTML}{3B3B3B}
+\definecolor{nus@gray}{HTML}{757575}
+\definecolor{nus@graylight}{HTML}{F0F0F0}
+\definecolor{nus@orangebright}{HTML}{F46524}
+\definecolor{nus@bluebright}{HTML}{0058B2}
+
+\setbeamercolor{palette primary}{fg=black,bg=white}
+\setbeamercolor{palette secondary}{fg=black,bg=white}
+\setbeamercolor{palette tertiary}{fg=black,bg=white}
+\setbeamercolor{palette quartenary}{fg=black,bg=white}
+
+\setbeamercolor{structure}{fg=nus@blue}
+\setbeamercolor{local structure}{fg=nus@bluebright}
+
+\setbeamercolor{headline title}{fg=nus@blue}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+
+\setbeamercolor{normal text}{fg=nus@black}
+\setbeamercolor{alerted text}{fg=nus@bluebright}
+\setbeamercolor{example text}{fg=nus@gray}
+
+\setbeamercolor{section name}{parent=titlelike}
+\setbeamercolor{section in head/foot}{fg=nus@blue}
+
+\setbeamercolor{block title}{fg=nus@blue,bg=white}
+\setbeamercolor{block separator}{bg=black}
+\setbeamercolor{block body}{fg=black,bg=white}
+
+\setbeamercolor{block alerted title}{fg=white,bg=nus@orangebright}
+\setbeamercolor{block alerted separator}{bg=nus@orange}
+\setbeamercolor{block alerted body}{fg=white,bg=nus@orangebright}
+
+\setbeamercolor{block example title}{fg=nus@bluebright,bg=nus@graylight}
+\setbeamercolor{block example separator}{bg=nus@gray}
+\setbeamercolor{block example body}{fg=black,bg=nus@graylight}
+
+\setbeamercolor{item}{fg=nus@blue}
+
+\setbeamercolor{abstract}{fg=white}
+\setbeamercolor{abstract title}{fg=white}
+
+\setbeamercolor{bibliography entry author}{fg=nus@black}
+\setbeamercolor{bibliography entry title}{fg=nus@blue}
+\setbeamercolor{bibliography entry location}{fg=nus@black}
+\setbeamercolor{bibliography entry note}{fg=nus@black}
+
+\setbeamercolor{hrule top}{fg=white, bg=nus@blue}
+\setbeamercolor{hrule bottom}{fg=white, bg=nus@orange}
+
+\setbeamercolor{palette quaternary}{fg=nus@blue}
+
+%
+% ASSETS
+%
+
+% `Gin` is the name for the `keyval` keys associated with 'Graphics inclusion'
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+
+% logo
+\def\themelogo{%
+  \begin{tikzpicture}[overlay, remember picture]
+  \node[left=2cm, shift={(0, 0.5)}] at (current page.30){
+    \includegraphics[width=10cm]{logonus}
+  };
+  \end{tikzpicture}
+  \unskip%
+}
+
+\def\htopline#1{%
+\begin{tikzpicture}
+    \node[
+      minimum width = 0.8\paperwidth,
+      minimum height = 3ex,
+      draw=none,
+      fill = #1,
+    ] (Block) {};
+  \end{tikzpicture}
+  \unskip%
+}
+
+%
+% ELEMENTS
+%
+
+% List
+\def\@listi{\leftmargin\leftmargini
+\topsep 1ex % spacing before
+\parsep 0\p@ \@plus\p@
+\itemsep 0.5ex} % spacing between
+
+% Itemize
+\setbeamertemplate{itemize item}{\raise0.5ex \hbox{\vrule width 0.5ex height 0.5ex}}
+\setbeamertemplate{itemize subitem}{\raise0.3ex \hbox{\vrule width 0.5ex height 0.5ex}}
+\setbeamertemplate{itemize subsubitem}{\raise0.2ex \hbox{\vrule width 0.5ex height 0.5ex}}
+
+% Enumerate
+\setbeamertemplate{enumerate item}{\insertenumlabel.}
+\setbeamertemplate{enumerate subitem}{\insertsubenumlabel.}
+\setbeamertemplate{enumerate subsubitem}{\insertsubsubenumlabel.}
+
+% Equation
+\setlength\belowdisplayshortskip{2ex}
+
+% Caption
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}[period]
+\setlength{\abovecaptionskip}{2ex}
+\setlength{\belowcaptionskip}{1ex}
+
+% Bibliography
+\setbeamertemplate{bibliography item}[text]
+
+% Navigation
+\beamertemplatenavigationsymbolsempty
+
+%
+% COMPONENTS
+%
+
+% Heading
+\newcommand\heading[1]
+{%
+  \par\bigskip
+  {\usebeamerfont{heading}\usebeamercolor[fg]{heading}#1}\par\smallskip
+}
+
+% Headline
+\setbeamertemplate{headline}
+{
+  \begin{beamercolorbox}{headline}
+    \begin{columns}
+      \begin{column}{\dimexpr\paperwidth}
+        \usebeamerfont{headline}
+        \vskip3ex
+        \centering
+        \ifx \inserttitle \empty \else
+        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\\[1ex]}
+        \fi
+        \ifx \beamer@shortauthor \empty \else
+        {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\\[1ex]}
+        \fi
+        \ifx \insertinstitute \empty \else
+        {\usebeamerfont{headline institute}\usebeamercolor[fg]{headline institute}\insertinstitute\\[1ex]}
+        \fi
+      \end{column}
+    \end{columns}
+    \vspace{6ex}
+    \ifbeamercolorempty[bg]{headline rule}{}{
+      \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
+    }
+    % https://tex.stackexchange.com/questions/128540/how-to-add-label-to-a-copy-shadow-of-an-object/128563#128563
+    \setstackgap{L}{1em}
+    \def\stackalignment{l}
+    \def\stacktype{L}
+    \stackon{\hspace{0.05\paperwidth}\htopline{nus@orange}}{\htopline{nus@blue}}
+    \themelogo
+  \end{beamercolorbox}
+}
+
+% Block
+\setbeamertemplate{block begin}
+{
+  \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block title}
+    \vskip0pt
+    \usebeamerfont{block title}\insertblocktitle
+    \vskip-1.25ex
+    \begin{beamercolorbox}[colsep=0.025ex]{block separator}\end{beamercolorbox}
+  \end{beamercolorbox}
+  {\parskip0pt\par}
+  \usebeamerfont{block body}
+  \vskip-0.5ex
+  \begin{beamercolorbox}[colsep*=0ex]{block body}
+  \justifying
+  \setlength{\parskip}{1ex}
+  \vskip-2ex
+}
+\setbeamertemplate{block end}
+{
+  \end{beamercolorbox}
+  \vskip0pt
+  \vspace*{2ex}
+}
+
+% Alert Block
+\setbeamertemplate{block alerted begin}
+{
+  \setbeamercolor{item}{fg=white}
+  \setbeamercolor{alerted text}{fg=white}
+  \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block alerted title}
+    \vskip0pt
+    \usebeamerfont{block title}\insertblocktitle
+    \vskip-1.25ex
+    \begin{beamercolorbox}[colsep=0.025ex]{block alerted separator}\end{beamercolorbox}
+  \end{beamercolorbox}
+  {\parskip0pt\par}
+  \usebeamerfont{block body}
+  \vskip-0.5ex
+  \begin{beamercolorbox}[colsep*=0ex]{block alerted body}
+  \justifying
+  \begin{adjustwidth}{1ex}{1ex}
+  \setlength{\parskip}{1ex}
+  \vskip-2ex
+}
+\setbeamertemplate{block alerted end}
+{
+  \end{adjustwidth}
+  \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt
+  \vspace*{2ex}
+}
+
+% Example Block
+\setbeamertemplate{block example begin}
+{
+  \begin{beamercolorbox}[colsep*=0ex,dp=2ex,center]{block example title}
+    \vskip0pt
+    \usebeamerfont{block title}\insertblocktitle
+    \vskip-1.25ex
+    \begin{beamercolorbox}[colsep=0.025ex]{block example separator}\end{beamercolorbox}
+  \end{beamercolorbox}
+  {\parskip0pt\par}
+  \usebeamerfont{block body}
+  \vskip-0.5ex
+  \begin{beamercolorbox}[colsep*=0ex]{block example body}
+  \justifying
+  \begin{adjustwidth}{1ex}{1ex}
+  \setlength{\parskip}{1ex}
+  \vskip-2ex
+}
+\setbeamertemplate{block example end}
+{
+  \end{adjustwidth}
+  \vskip1ex
+  \end{beamercolorbox}
+  \vskip0pt
+  \vspace*{2ex}
+}
+
+% Footer
+\newcommand{\footercontent}[1]{\newcommand{\insertfootercontent}{#1}}
+
+\setbeamertemplate{footline}{
+  \ifdefined\insertfootercontent
+  \begin{beamercolorbox}[vmode]{headline}
+    \ifbeamercolorempty[bg]{headline rule}{}{
+      \begin{beamercolorbox}[wd=\paperwidth,colsep=0.25ex]{headline rule}\end{beamercolorbox}
+    }
+    \vspace{1.5ex}
+    \hspace{\sepwidth}
+    \usebeamerfont{footline}
+    \centering
+    \insertfootercontent
+    \hspace{\sepwidth}
+    \vspace{1.5ex}
+  \end{beamercolorbox}
+  \else\fi
+}

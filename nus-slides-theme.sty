@@ -1,0 +1,339 @@
+%
+% NUS BEAMER THEME
+%
+
+% this package assumes Lua(La)Tex throughout
+\ProvidesPackage{nus-theme}[NUS Beamer theme.]
+
+\RequirePackage{fontspec}     % advanced font selection, unified interface for OTF, TTF, AAT
+\RequirePackage{unicode-math} % unicode mathematics support
+\RequirePackage{microtype}    % micro-typographic (character protrusion, font expansion, etc) enhacements
+
+\RequirePackage{xcolor} % driver-independent color extensions
+\RequirePackage{graphicx}
+\RequirePackage{subcaption}
+
+\RequirePackage{stackengine} % highly customised stacking of objects
+
+\RequirePackage{tikz}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{tikzmark} % for \tikzmarknode
+\usetikzlibrary{calc} % for computing the midpoint between two nodes, e.g. at ($(p1.north)!0.5!(p2.north)$)
+
+\RequirePackage{annotate-equations}
+
+\RequirePackage{svg}
+\svgsetup{inkscapearea=page, inkscapelatex=true}
+
+\RequirePackage{bookmark} % alternative outline organization for hyperref
+\RequirePackage{xurl} % add URL line breaks if available
+
+\RequirePackage{amsmath} % AMS mathematical facilities
+
+%
+% GENERAL SETTINGS
+%
+\beamertemplatenavigationsymbolsempty
+
+\raggedbottom
+\widowpenalties 1 10000
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\newif\ifbibliography
+
+\urlstyle{same} % disable monospaced font for URLs
+
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+%
+% HELPERS
+%
+
+\DeclareRobustCommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+}
+
+% citing with author names and bibliographic reference
+\newcommand{\citet}[1]{\citeauthor*{#1}~\cite{#1}}
+\newcommand{\Citet}[1]{\Citeauthor*{#1}~\cite{#1}}
+\newcommand{\ie}{\textit{i}.\textit{e}.}
+\newcommand{\eg}{\textit{e}.\textit{g}.}
+
+% quote signature
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip1em
+  \hbox{}\nobreak\hfill #1%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+% full-page graphic overlay
+\newcommand{\fullsizegraphic}[1]{
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[at=(current page.center)] {\includegraphics{#1}};
+  \end{tikzpicture}
+}
+
+%
+% FONTS
+%
+% see: https://mirror.kku.ac.th/CTAN/macros/unicodetex/latex/fontspec/fontspec.pdf
+\setmainfont{Lato}[
+  FontFace = {lt}{n}{Lato Light},
+  FontFace = {lt}{it}{Lato Light Italic},
+]
+\setromanfont{Raleway}[
+  FontFace = {lt}{n}{Raleway Light},
+  FontFace = {lt}{it}{Raleway Light Italic},
+]
+\setmonofont{Fira Mono}[Scale=MatchLowercase]
+\setmathfont{XITS Math}
+
+% see: https://tex.stackexchange.com/questions/176722/define-a-new-xxseries-macro-for-light-fonts
+\DeclareRobustCommand{\ltseries}{\fontseries{lt}\selectfont}
+\DeclareTextFontCommand{\textsi}{\sishape}
+
+\usefonttheme{professionalfonts} % disable beamer internal replacements
+
+\setbeamerfont{alerted text}{series=\bfseries}
+
+\setbeamerfont{title}{family=\rmfamily,series=\bfseries,size=\Huge}
+\setbeamerfont{subtitle}{family=\rmfamily,series=\ltseries,size=\LARGE}
+\setbeamerfont{part page}{size=\Huge, family=\rmfamily, series=\bfseries}
+\setbeamerfont{section title}{size=\Huge, family=\rmfamily, series=\bfseries}
+\setbeamerfont{subsection title}{size=\Huge, family=\rmfamily, series=\bfseries}
+\setbeamerfont{frametitle}{family=\rmfamily,series=\ltseries}
+\setbeamerfont{framesubtitle}{size=\large,series=\itshape}
+
+\setbeamerfont{description item}{series=\bfseries}
+
+\setbeamerfont{abstract title}{series=\bfseries\scshape, family=\rmfamily, size=\small}
+\setbeamerfont{abstract}{size=\footnotesize, series=\ltseries}
+
+\setbeamerfont{bibliography item}{size=\footnotesize}
+\setbeamerfont{bibliography entry author}{size=\small,series=\mdseries}
+\setbeamerfont{bibliography entry title}{parent=bibliography entry author,series=\mdseries}
+\setbeamerfont{bibliography entry location}{parent=bibliography entry author}
+\setbeamerfont{bibliography entry note}{parent=bibliography entry author}
+
+% COLORS
+%
+\definecolor{nus@orange}{HTML}{EF7C00}
+\definecolor{nus@blue}{HTML}{003D7C}
+\definecolor{nus@black}{HTML}{3B3B3B}
+\definecolor{nus@gray}{HTML}{757575}
+\definecolor{nus@orangebright}{HTML}{F46524}
+\definecolor{nus@bluebright}{HTML}{0058B2}
+
+\setbeamercolor{normal text}{fg=nus@black}
+\setbeamercolor{alerted text}{fg=nus@bluebright}
+\setbeamercolor{example text}{fg=nus@gray}
+
+\setbeamercolor{structure}{fg=nus@blue}
+\setbeamercolor{local structure}{fg=nus@bluebright}
+
+\setbeamercolor{section name}{parent=titlelike}
+\setbeamercolor{section in head/foot}{fg=nus@blue}
+
+\setbeamercolor{item}{fg=nus@blue}
+
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+
+\setbeamercolor{abstract}{fg=white}
+\setbeamercolor{abstract title}{fg=white}
+
+\setbeamercolor{bibliography entry author}{fg=nus@black}
+\setbeamercolor{bibliography entry title}{fg=nus@blue}
+\setbeamercolor{bibliography entry location}{fg=nus@black}
+\setbeamercolor{bibliography entry note}{fg=nus@black}
+
+\setbeamercolor{hrule top}{fg=white, bg=nus@blue}
+\setbeamercolor{hrule bottom}{fg=white, bg=nus@orange}
+
+\setbeamercolor{palette quaternary}{fg=nus@blue}
+
+%
+% ASSETS
+%
+
+% `Gin` is the name for the `keyval` keys associated with 'Graphics inclusion'
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+
+% logo
+\def\themelogo{%
+  \begin{tikzpicture}[overlay, remember picture]
+  \node[left=0.2cm] at (current page.25){
+    \includegraphics[width=2cm]{logonus}
+  };
+  \end{tikzpicture}
+  \unskip%
+}
+
+\def\htopline#1{%
+\begin{tikzpicture}
+    \node[
+      minimum width = 0.8\paperwidth,
+      minimum height = 0.5ex,
+      draw=none,
+      fill = #1,
+    ] (Block) {};
+  \end{tikzpicture}
+  \unskip%
+}
+
+
+
+%
+% TEMPLATES
+%
+\makeatletter
+
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+
+\setbeamertemplate{headline}{%
+  % https://tex.stackexchange.com/questions/85439/custom-headline-in-latex-beamer
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex]{palette quaternary}%
+    \hspace{0.05\paperwidth}\insertsectionnavigationhorizontal{0.95\paperwidth}{}{\hskip0pt plus1filll}
+    \end{beamercolorbox}%
+  }
+  % https://tex.stackexchange.com/questions/128540/how-to-add-label-to-a-copy-shadow-of-an-object/128563#128563
+  \setstackgap{L}{0.3em}
+  \def\stackalignment{l}
+  \def\stacktype{L}
+  \stackon{\hspace{0.05\paperwidth}\htopline{nus@orange}}{\htopline{nus@blue}}
+  \themelogo
+}
+
+\setbeamertemplate{footline}[frame number]
+
+\def\ps@empty@titlepage{%
+  % source: https://tex.stackexchange.com/questions/546473/how-to-disable-headline-footline-on-title-page-of-beamer-presentation-in-templat
+  \setbeamercolor{background canvas}{bg=nus@orangebright}
+  \@nameuse{ps@empty}
+}
+
+\setbeamertemplate{title page}{%
+  \thispagestyle{empty@titlepage}
+  \begingroup
+    \vskip-1ex
+    \setbeamercolor{structure}{fg=white}
+    \setbeamercolor{normal text}{fg=white}
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%     
+    \end{beamercolorbox}%
+    \vskip0.5em\par
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \vskip-0.5em\par
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \endgroup
+}
+
+\setbeamertemplate{abstract title}{\abstractname}
+\setbeamertemplate{abstract begin}{%
+  \beamercolorbox[vmode]{abstract}%
+  \leftskip2em\rightskip2em plus 1fill%
+  \usebeamerfont{abstract}%
+}
+
+\setbeamertemplate{abstract end}{\endbeamercolorbox\vskip-1ex}
+
+\setbeamertemplate{frametitle}{%
+  \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+  \@tempdima=0.75\textwidth%
+  \advance\@tempdima by\beamer@leftmargin%
+  \advance\@tempdima by\beamer@rightmargin%
+  \begin{beamercolorbox}[sep=0.2cm,left,wd=\the\@tempdima]{frametitle}
+    \usebeamerfont{frametitle}%
+    \vbox{}\hskip-0.3cm%
+    \if@tempswa\else\csname beamer@fteleft\endcsname\fi%
+    \strut\insertframetitle\strut\par%
+    {%
+      \ifx\insertframesubtitle\@empty%
+      \else%
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\hskip-0.3cm\strut\insertframesubtitle\strut\par}%
+      \fi
+    }%
+    \vskip0ex
+    \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+  \end{beamercolorbox}%
+}
+
+\setbeamertemplate{part page}{%
+  \begingroup
+    \centering
+    \vskip1cm
+    \begin{beamercolorbox}[center]{part title}
+      \usebeamerfont{part title}\insertpart\par
+    \end{beamercolorbox}
+  \endgroup
+}
+
+\setbeamertemplate{section page}{%
+  \begingroup
+    \centering
+    \vskip1cm
+    \begin{beamercolorbox}[center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \endgroup
+}
+
+\setbeamertemplate{subsection page}{%
+  \begingroup
+    \centering
+    \vskip1cm
+    \begin{beamercolorbox}[center]{part title}
+      \usebeamerfont{subsection title}\insertsubsection\par
+    \end{beamercolorbox}
+  \endgroup
+} 
+
+\setbeamertemplate{itemize item}[square]
+
+\setbeamertemplate{bibliography item}{[\theenumiv]}
+
+\makeatother
+
+%
+% FORMATTING
+%
+
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}

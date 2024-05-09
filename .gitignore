@@ -1,0 +1,18 @@
+# tex scaffolding
+*.aux
+*.bbl
+*.blg
+*.bcf
+*.fdb_latexmk
+*.fls
+*.log
+*.run.xml
+*.synctex.gz
+*.toc
+*.out
+*.nav
+*.snm
+*.vrb
+svg-inkscape
+
+_minted-main

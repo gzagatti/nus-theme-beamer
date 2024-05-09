@@ -1,0 +1,183 @@
+% beamer loads hyperref and url; let's pass our options to the package
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+  xcolor={dvipsnames,rgb}
+]{beamer}
+\usepackage{nus-slides-theme}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\lstset{
+  language=Python,
+  % basicstyle=\small\ttfamily\setbox\strutbox\hbox{},
+  basicstyle=\footnotesize\ttfamily,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  breaklines=false,
+  breakatwhitespace=false,
+  backgroundcolor=\color{white},
+  rulecolor=\color{nus@gray},
+  aboveskip=1em,
+  belowskip=1em,
+}
+
+%
+% METADATA
+%
+\hypersetup{
+  pdftitle={Some fancy title: Followed by some more text},
+  pdfauthor={Alyssa P. Turing, Ben Bitdiddle, Lem E. Tweakit},
+  pdflang={en},
+  hidelinks,
+  pdfcreator={Alyssa P. Turing}}
+
+%
+% TITLE
+%
+\title{Some fancy title}
+\subtitle{Followed by some more text}
+\author{%
+  Alyssa P. Turing~\inst{1} \and%
+  Ben Bitdiddle~\inst{2} \and%
+  Lem E. Tweakit~\inst{1}
+}
+\institute{%
+  \inst{1} Some institute, National University of Singapore \and%
+  \inst{2} Anoter institute, National University of Singapore \and%
+}
+\date[ABC Conference 2025]
+
+%
+% TITLE
+%
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\hypertarget{fancy}{\section{Fancy section}}
+
+  \begin{frame}{A block title}
+
+    Some block contents, followed by a diagram, followed by a dummy paragraph.
+
+    \vspace{1em}
+
+    \begin{figure}
+      \centering
+      \begin{tikzpicture}[scale=2]
+        \draw[step=0.25cm,color=gray] (-1,-1) grid (1,1);
+        \draw (1,0) -- (0.2,0.2) -- (0,1) -- (-0.2,0.2) -- (-1,0)
+          -- (-0.2,-0.2) -- (0,-1) -- (0.2,-0.2) -- cycle;
+      \end{tikzpicture}
+      \caption{A figure caption.}
+    \end{figure}
+
+  \end{frame}
+
+  \hypertarget{math}{\section{Math}}
+
+  \begin{frame}{Fancy equation}{With explanation}
+
+    {\Large
+    \[
+      du =
+          f(u, p, t) \eqnmarkbox[nus@gray]{deterministic}{dt}
+        + g (u, p, t) \eqnmarkbox[nus@orangebright]{diffusion}{dW (t)}
+        + h (u, p, t) \eqnmarkbox[nus@bluebright]{jump}{dN (t)}
+    \]
+    }
+
+    \annotate[yshift=1em]{above,left}{deterministic}{\textbf{Deterministic component}}
+    \annotate[yshift=0.75em]{above}{diffusion}{\textbf{Diffusion component}\\``some change occurs during any\\time interval, however small, but in small\\time intervals the changes are small''\\\cite{feller1949}}
+    \annotate[yshift=-1.5em]{below,left}{jump}{\textbf{Jump component}\\``the system remains for a time unchanged,\\then undergoes a sudden change into another state.'' \cite{feller1949}}
+
+  \end{frame}
+
+  \begin{frame}[fragile=singleslide]{Some code}{In Python}
+
+    \begin{lstlisting}
+      def hello(x):
+        print("Hello ", x)
+
+      hello("Ben")
+    \end{lstlisting}
+
+  \end{frame}
+
+\hypertarget{lists}{\section{Lists}}
+
+  \begin{frame}{A slide containing a list}
+
+    This block catches your eye, so \alert{important stuff} should probably go here.
+
+    Nam vulputate nunc felis, non condimentum lacus porta ultrices. Nullam sed sagittis metus. Etiam consectetur gravida urna quis suscipit.
+
+    \begin{itemize}
+      \item \alert{Mauris tempor} risus nulla, sed ornare
+      \item \alert{Libero tincidunt} a duis congue vitae
+      \item \alert{Dui ac pretium} morbi justo neque, ullamcorper
+    \end{itemize}
+
+    Eget augue porta, bibendum venenatis tortor.
+
+  \end{frame}
+
+  \begin{frame}{A slide containing an enumerated list}
+
+    In quis suscipit erat. \alert{Phasellus mauris felis, molestie ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam mollis condimentum purus quis sodales. Nullam eu felis eu nulla eleifend bibendum nec eu lorem. commodo in metus.
+
+    \begin{enumerate}
+      \item \alert{Morbi mauris purus}, egestas at vehicula et, convallis accumsan orci. montes, nascetur ridiculus mus.
+      \item \alert{Cras vehicula blandit urna ut maximus}. Aliquam blandit nec massa ac sollicitudin. velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
+      \item \alert{Vestibulum et massa diam}. Phasellus fermentum augue non nulla accumsan.
+    \end{enumerate}
+
+  \end{frame}
+
+  \begin{frame}{A slide containing a description list}
+
+    Vivamus congue volutpat elit non semper. Praesent molestie nec erat ac interdum. In quis suscipit erat. \alert{Phasellus mauris felis, molestie ac pharetra quis}, tempus nec ante. Donec finibus ante vel purus mollis fermentum. Sed felis mi, pharetra eget nibh a, feugiat eleifend dolor. Nam mollis condimentum purus quis sodales. bibendum nec eu lorem. Vivamus felis velit, volutpat ut facilisis ac, commodo in metus.
+
+    \begin{description}
+      \item[Morbi] Orci varius natoque penatibus et magnis dis parturient
+        montes, nascetur ridiculus mus.
+      \item[Vehicula] Curabitur cursus, metus nec imperdiet bibendum,
+        velit lectus faucibus dolor, quis gravida metus mauris gravida turpis.
+      \item[Vestibulum] Phasellus fermentum augue non
+        nulla accumsan, non rhoncus lectus condimentum.
+    \end{description}
+
+  \end{frame}
+
+  \begin{frame}
+
+    \thispagestyle{empty@titlepage}
+    \begingroup
+      \setbeamercolor{structure}{fg=white}
+      \begin{beamercolorbox}[sep=8pt,center]{title}%
+        {\usebeamerfont{title}\usebeamercolor{title}Thank you!}%
+        \vskip1em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}{Alissa P. Turing}}%
+      \end{beamercolorbox}
+    \endgroup
+
+  \end{frame}
+
+\hypertarget{references}{\section{References}}
+
+  \begin{frame}[t,allowframebreaks]
+
+    \frametitle{References}
+    \bibliographystyle{plain}\bibliography{references}
+
+  \end{frame}
+
+\end{document}
